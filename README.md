@@ -52,7 +52,7 @@ In this lab you'll create a Helm chart repository and use it to deploy a small J
 7. Build a docker image  by typing in (or copying and pasting in) the following (uncommented) commands
 
     ```bash
-    # Note substitute your  username  [YOUR_USERNAME]
+    # Note: if you don't have the environment variables in the command set, replace $CRNAMESPACE with your container registry namespace and $USERNAME with your lab user id.
     docker build -t us.icr.io/$CRNAMESPACE/$USERNAME/pbw-mariadb-web:1.0.0 .
     ```
 
@@ -65,7 +65,7 @@ In this lab you'll create a Helm chart repository and use it to deploy a small J
 9. Push the image to the IBM Container registry by typing in (or copying and pasting in) the following (uncommented) commands
 
     ```bash
-    # Note substitute your username e.g. user05 for  [YOUR_USERNAME]
+    # Note: if you don't have the environment variables in the command set, replace $CRNAMESPACE with your container registry namespace and $USERNAME with your lab user id.
     docker push us.icr.io/$CRNAMESPACE/$USERNAME/pbw-mariadb-web:1.0.0
     ```
 
@@ -109,6 +109,8 @@ In this lab you'll create a Helm chart repository and use it to deploy a small J
 
 1. In your terminal window type the following command, substituting your terminal user for [YOUR_USERNAME].  **Note**: Helm charts can be deployed multiple  times but each deployment must have a unique name
 ```
+   # Note: if you don't have the environment variables in the command set, replace $CRNAMESPACE with your container registry namespace and $USERNAME with your lab user id.
+
    helm install --name pbw-liberty-mariadb --set liberty.image.registry=us.icr.io \
    --set liberty.image.namespace=$CRNAMESPACE/$USERNAME local/pbw-liberty-mariadb
 ```
@@ -124,7 +126,7 @@ You'll commands to get the endpoint and port number of your deployed Helm releas
 
 2. Run the following command to get the external IP address  of the first worker node in your cluster
 ```bash
-   # Substitute your cluster name e.g. user05-cluster for [YOUR_CLUSTER_NAME]
+   # Note: if you don't have the environment variables in the command set, replace $USERNAME with your lab user id.
    ibmcloud ks workers $USERNAME-cluster | grep -v '^*' | egrep -v "(ID|OK)" | awk '{print $2;}' | head -n1
 ```
 3. In your browser's address bar enter the URL of your deployed app. The URL will be the external IP address of the first worker in your cluster followed by a colon and then followed by the port number of your deployed app. For example if your external IP is 169.61.73.182 and the port is 30961 the URL will be ```http://169.61.73.182:30961```
